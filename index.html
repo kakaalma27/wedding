@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>Elegant Wedding Invitation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap");
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #faf6f2;
+        color: #333;
+      }
+
+      .playfair {
+        font-family: "Playfair Display", serif;
+      }
+
+      .floral-divider {
+        position: relative;
+        height: 30px;
+        margin: 2rem 0;
+      }
+
+      .floral-divider::before {
+        content: "❀ ❀ ❀";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: #d4a373;
+        font-size: 1.2rem;
+        letter-spacing: 0.5rem;
+      }
+
+      .envelope {
+        position: relative;
+        perspective: 1000px;
+        width: 300px;
+        height: 200px;
+        margin: 0 auto;
+      }
+
+      .envelope-front,
+      .envelope-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #f8edeb;
+        border: 1px solid #d4a373;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        backface-visibility: hidden;
+        transition: transform 1s;
+        transform-style: preserve-3d;
+      }
+
+      .envelope-front {
+        transform: rotateY(0deg);
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+      }
+
+      .envelope-back {
+        transform: rotateY(180deg);
+        background: #f8edeb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+      }
+
+      .envelope.open .envelope-front {
+        transform: rotateY(180deg);
+      }
+
+      .envelope.open .envelope-back {
+        transform: rotateY(360deg);
+      }
+
+      .envelope-seal {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        width: 60px;
+        height: 60px;
+        background: #d4a373;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 3;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .countdown-item {
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+        padding: 1rem;
+        min-width: 70px;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .photo-frame {
+        border: 15px solid #f8edeb;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .photo-frame::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0) 50%
+        );
+        z-index: 1;
+      }
+
+      .rsvp-form input,
+      .rsvp-form select,
+      .rsvp-form textarea {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid #d4a373;
+        border-radius: 4px;
+        padding: 0.75rem;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+
+      .rsvp-form input:focus,
+      .rsvp-form select:focus,
+      .rsvp-form textarea:focus {
+        outline: none;
+        border-color: #a47148;
+        box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.3);
+      }
+
+      .map-container {
+        height: 300px;
+        width: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .floating {
+        animation: float 3s ease-in-out infinite;
+      }
+    </style>
+  </head>
+  <body class="bg-amber-50">
+    <!-- Header with Envelope -->
+    <header class="py-12 px-4 text-center relative overflow-hidden">
+      <div
+        class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')] bg-cover bg-center opacity-10"></div>
+      <div class="max-w-4xl mx-auto relative">
+        <h1 class="playfair text-4xl md:text-5xl font-bold text-amber-900 mb-8">
+          You're Invited
+        </h1>
+
+        <div
+          class="envelope mb-12"
+          id="envelope">
+          <div class="envelope-front">
+            <div class="text-center p-6">
+              <p class="playfair text-xl text-amber-900">Mr. & Mrs. Smith</p>
+              <p class="text-sm text-amber-800 mt-2">
+                Request the pleasure of your company
+              </p>
+            </div>
+          </div>
+          <div class="envelope-back">
+            <div class="text-center p-6">
+              <p class="playfair text-xl text-amber-900">Save the Date</p>
+              <p class="text-amber-800 mt-2">June 15, 2024</p>
+            </div>
+          </div>
+          <div
+            class="envelope-seal"
+            id="seal">
+            <i class="fas fa-heart"></i>
+          </div>
+        </div>
+
+        <div class="floating">
+          <h2
+            class="playfair text-3xl md:text-4xl font-semibold text-amber-800">
+            Emily & James
+          </h2>
+          <div class="floral-divider"></div>
+          <p class="text-lg text-amber-700">Are getting married</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+      <!-- Couple Section -->
+      <section class="mb-20">
+        <div class="flex flex-col md:flex-row items-center gap-8">
+          <div class="w-full md:w-1/2">
+            <div class="photo-frame">
+              <img
+                src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                alt="Couple"
+                class="w-full h-auto" />
+            </div>
+          </div>
+          <div class="w-full md:w-1/2">
+            <h2 class="playfair text-3xl font-semibold text-amber-800 mb-6">
+              Our Love Story
+            </h2>
+            <p class="text-gray-700 mb-4">
+              We met in college during a literature class, bonding over our
+              shared love for classic novels and bad coffee. After five years of
+              adventures, laughter, and growing together, James proposed during
+              a sunset picnic in our favorite park.
+            </p>
+            <p class="text-gray-700">
+              Now, we're excited to begin this new chapter of our lives together
+              and would be honored to have you celebrate with us.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Wedding Details -->
+      <section class="mb-20 text-center">
+        <h2 class="playfair text-3xl font-semibold text-amber-800 mb-2">
+          Wedding Details
+        </h2>
+        <div class="floral-divider"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          <div class="p-6 bg-white rounded-lg shadow-md">
+            <div class="text-amber-700 text-4xl mb-4">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h3 class="playfair text-xl font-medium mb-2">When</h3>
+            <p class="text-gray-700">Saturday, June 15, 2024</p>
+            <p class="text-gray-600 mt-2">Ceremony at 4:00 PM</p>
+          </div>
+
+          <div class="p-6 bg-white rounded-lg shadow-md">
+            <div class="text-amber-700 text-4xl mb-4">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3 class="playfair text-xl font-medium mb-2">Where</h3>
+            <p class="text-gray-700">The Willow Gardens</p>
+            <p class="text-gray-600 mt-2">123 Blossom Lane, Springfield</p>
+          </div>
+
+          <div class="p-6 bg-white rounded-lg shadow-md">
+            <div class="text-amber-700 text-4xl mb-4">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <h3 class="playfair text-xl font-medium mb-2">Reception</h3>
+            <p class="text-gray-700">Immediately following ceremony</p>
+            <p class="text-gray-600 mt-2">Dinner, dancing & celebrations</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Countdown -->
+      <section class="mb-20 text-center bg-amber-100 py-12 px-6 rounded-lg">
+        <h2 class="playfair text-3xl font-semibold text-amber-800 mb-2">
+          Counting Down
+        </h2>
+        <div class="floral-divider"></div>
+
+        <div
+          class="flex justify-center gap-4 mt-8 flex-wrap"
+          id="countdown">
+          <div class="countdown-item">
+            <div
+              class="text-4xl font-bold text-amber-800"
+              id="days">
+              00
+            </div>
+            <div class="text-sm text-gray-600">Days</div>
+          </div>
+          <div class="countdown-item">
+            <div
+              class="text-4xl font-bold text-amber-800"
+              id="hours">
+              00
+            </div>
+            <div class="text-sm text-gray-600">Hours</div>
+          </div>
+          <div class="countdown-item">
+            <div
+              class="text-4xl font-bold text-amber-800"
+              id="minutes">
+              00
+            </div>
+            <div class="text-sm text-gray-600">Minutes</div>
+          </div>
+          <div class="countdown-item">
+            <div
+              class="text-4xl font-bold text-amber-800"
+              id="seconds">
+              00
+            </div>
+            <div class="text-sm text-gray-600">Seconds</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gallery -->
+      <section class="mb-20">
+        <h2
+          class="playfair text-3xl font-semibold text-amber-800 mb-6 text-center">
+          Our Journey
+        </h2>
+        <div class="floral-divider"></div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+          <div
+            class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition duration-300">
+            <img
+              src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+              alt="Couple photo 1"
+              class="w-full h-48 object-cover hover:scale-105 transition duration-500" />
+          </div>
+          <div
+            class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition duration-300">
+            <img
+              src="https://images.unsplash.com/photo-1529254479751-faeedc87aef2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+              alt="Couple photo 2"
+              class="w-full h-48 object-cover hover:scale-105 transition duration-500" />
+          </div>
+          <div
+            class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition duration-300">
+            <img
+              src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1473&q=80"
+              alt="Couple photo 3"
+              class="w-full h-48 object-cover hover:scale-105 transition duration-500" />
+          </div>
+          <div
+            class="overflow-hidden rounded-lg shadow-md hover:shadow-xl transition duration-300">
+            <img
+              src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+              alt="Couple photo 4"
+              class="w-full h-48 object-cover hover:scale-105 transition duration-500" />
+          </div>
+        </div>
+      </section>
+
+      <!-- RSVP -->
+      <section class="mb-20 bg-white p-8 rounded-lg shadow-md">
+        <h2
+          class="playfair text-3xl font-semibold text-amber-800 mb-6 text-center">
+          RSVP
+        </h2>
+        <div class="floral-divider"></div>
+
+        <p class="text-center text-gray-700 mb-8">
+          Kindly respond by May 1st, 2024
+        </p>
+
+        <form class="rsvp-form max-w-lg mx-auto">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label
+                for="name"
+                class="block text-gray-700 mb-1">
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                required />
+            </div>
+            <div>
+              <label
+                for="email"
+                class="block text-gray-700 mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                required />
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <label
+              for="guests"
+              class="block text-gray-700 mb-1">
+              Number of Guests
+            </label>
+            <select
+              id="guests"
+              required>
+              <option value="">Select...</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5+</option>
+            </select>
+          </div>
+
+          <div class="mt-4">
+            <label class="block text-gray-700 mb-2">
+              Will you be attending?
+            </label>
+            <div class="flex gap-4">
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  name="attending"
+                  value="yes"
+                  class="text-amber-600"
+                  required />
+                <span class="ml-2 text-gray-700">Joyfully Accept</span>
+              </label>
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  name="attending"
+                  value="no"
+                  class="text-amber-600" />
+                <span class="ml-2 text-gray-700">Regretfully Decline</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <label
+              for="message"
+              class="block text-gray-700 mb-1">
+              Message for the couple (optional)
+            </label>
+            <textarea
+              id="message"
+              rows="3"></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="mt-6 w-full bg-amber-700 hover:bg-amber-800 text-white font-medium py-3 px-4 rounded transition duration-300">
+            Send Response
+          </button>
+        </form>
+      </section>
+
+      <!-- Location Map -->
+      <section class="mb-20">
+        <h2
+          class="playfair text-3xl font-semibold text-amber-800 mb-6 text-center">
+          Location
+        </h2>
+        <div class="floral-divider"></div>
+
+        <div class="map-container mt-8">
+          <!-- This would be replaced with an actual map embed in a real implementation -->
+          <div
+            class="w-full h-full bg-gray-200 flex items-center justify-center">
+            <div class="text-center">
+              <i class="fas fa-map-marked-alt text-4xl text-amber-700 mb-2"></i>
+              <p class="text-gray-700">Map would be displayed here</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="playfair text-xl font-medium text-amber-800 mb-4">
+              Ceremony & Reception
+            </h3>
+            <p class="text-gray-700">The Willow Gardens</p>
+            <p class="text-gray-600">123 Blossom Lane, Springfield</p>
+            <p class="text-gray-600 mt-2">4:00 PM - Midnight</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="playfair text-xl font-medium text-amber-800 mb-4">
+              Accommodations
+            </h3>
+            <p class="text-gray-700">The Grand Hotel</p>
+            <p class="text-gray-600">456 Main Street, Springfield</p>
+            <p class="text-gray-600 mt-2">
+              Mention "Smith Wedding" for group rate
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gift Registry -->
+      <section class="text-center bg-amber-100 py-12 px-6 rounded-lg">
+        <h2 class="playfair text-3xl font-semibold text-amber-800 mb-2">
+          Gift Registry
+        </h2>
+        <div class="floral-divider"></div>
+
+        <p class="text-gray-700 max-w-2xl mx-auto mt-6 mb-8">
+          Your presence at our wedding is the greatest gift of all. However, if
+          you wish to contribute to our new life together, we've registered at
+          the following stores:
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-6">
+          <a
+            href="#"
+            class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 w-40">
+            <i class="fab fa-amazon text-3xl text-amber-700 mb-2"></i>
+            <p class="text-gray-700">Amazon</p>
+          </a>
+          <a
+            href="#"
+            class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 w-40">
+            <i class="fas fa-home text-3xl text-amber-700 mb-2"></i>
+            <p class="text-gray-700">Crate & Barrel</p>
+          </a>
+          <a
+            href="#"
+            class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 w-40">
+            <i class="fas fa-utensils text-3xl text-amber-700 mb-2"></i>
+            <p class="text-gray-700">Williams Sonoma</p>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-amber-900 text-amber-100 py-12 px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="playfair text-2xl font-medium mb-4">Emily & James</h2>
+        <div class="flex justify-center gap-4 mb-6">
+          <a
+            href="#"
+            class="text-amber-100 hover:text-white transition duration-300">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+          <a
+            href="#"
+            class="text-amber-100 hover:text-white transition duration-300">
+            <i class="fab fa-pinterest text-xl"></i>
+          </a>
+          <a
+            href="#"
+            class="text-amber-100 hover:text-white transition duration-300">
+            <i class="fas fa-envelope text-xl"></i>
+          </a>
+        </div>
+        <p class="text-sm">June 15, 2024 • The Willow Gardens</p>
+        <p class="text-xs mt-6 text-amber-200">
+          Created with love for our special day
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Envelope animation
+      document.getElementById("seal").addEventListener("click", function () {
+        document.getElementById("envelope").classList.toggle("open");
+      });
+
+      // Countdown timer
+      function updateCountdown() {
+        const weddingDate = new Date("June 15, 2024 16:00:00").getTime();
+        const now = new Date().getTime();
+        const distance = weddingDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerHTML = days
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("hours").innerHTML = hours
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("minutes").innerHTML = minutes
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("seconds").innerHTML = seconds
+          .toString()
+          .padStart(2, "0");
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      // Form submission
+      document
+        .querySelector(".rsvp-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          alert(
+            "Thank you for your RSVP! We look forward to celebrating with you."
+          );
+          this.reset();
+        });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
